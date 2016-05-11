@@ -70,5 +70,8 @@ when "last"
 
   puts "```" + table.to_s + "```"
 else
+  start_time = Time.now
   accum(default_key, cog_input_data)
+  elapsed = Time.now - start_time
+  puts "COGCMD_DEBUG: Accumulated input data in #{elapsed} seconds."
 end

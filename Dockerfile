@@ -1,9 +1,8 @@
-FROM ruby:2.3.1-alpine
+FROM alpine:3.3
 
-# Setup cog user
-RUN adduser -h /home/cog -D cog && \
-    mkdir -p /home/cog
+RUN apk -U add ca-certificates ruby ruby-bundler ruby-dev ruby-io-console \
+               ruby-builder ruby-irb ruby-rdoc ruby-json
 
-WORKDIR /home/cog
+WORKDIR /bundle
 COPY . $WORKDIR
 RUN bundle install --path .bundle
