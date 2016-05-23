@@ -1,13 +1,24 @@
 ---
 cog_bundle_version: 3
 name: format
-version: 0.2.0
+version: 0.2.1
 docker:
   image: cogcmd/format
-  tag: 0.2.0
+  tag: 0.2.1
 commands:
   table:
     executable: cog-command
+    documentation: "format:table field1 field2 ... fieldN"
+    executable: cog-command
+    rules: [ 'allow' ]
+  list:
+    documentation: "format:list field [[--order|-o] <asc|desc>]"
+    executable: cog-command
+    options:
+      order:
+        type: string
+        required: false
+        short_flag: o
     rules: [ 'allow' ]
 templates:
   preformatted:
