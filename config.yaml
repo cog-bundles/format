@@ -7,7 +7,7 @@ docker:
   tag: 0.2.0
 commands:
   table:
-    executable: /Users/imbriaco/operable/bundles/format-rb/cog-command
+    executable: cog-command
     rules: [ 'allow' ]
 templates:
   preformatted:
