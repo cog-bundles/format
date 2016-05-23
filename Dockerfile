@@ -1,8 +1,9 @@
-FROM alpine:3.3
+FROM ruby:2.3.1-alpine
 
-RUN apk -U add ca-certificates ruby ruby-bundler ruby-dev ruby-io-console \
-               ruby-builder ruby-irb ruby-rdoc ruby-json
+RUN echo -n "Before: " && du -sh /
 
 WORKDIR /bundle
 COPY . $WORKDIR
 RUN bundle install --path .bundle
+
+RUN echo -n "After: " && du -sh /
