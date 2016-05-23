@@ -7,13 +7,13 @@ docker:
   tag: 0.2.1
 commands:
   table:
-    executable: cog-command
+    executable: /home/bundle/cog-command
     documentation: "format:table field1 field2 ... fieldN"
     executable: cog-command
     rules: [ 'allow' ]
   list:
     documentation: "format:list field [[--order|-o] <asc|desc>]"
-    executable: cog-command
+    executable: /home/bundle/cog-command
     options:
       order:
         type: string
