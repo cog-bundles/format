@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/cog-bundles/cog-rb.git
+  revision: b8d040427cb25025551d896d74b8fdf2594f8bf6
+  specs:
+    cog-rb (0.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -7,7 +13,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cog-rb!
   text-table
 
 BUNDLED WITH
-   1.11.2
+   1.12.4
