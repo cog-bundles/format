@@ -11,8 +11,9 @@ class CogCmd::Format::List < Cog::Command
 
     list = fetch_input.map { |obj| obj[request.args[0]] }.sort
     list = list.reverse if request.options['order'] == 'desc'
+    delim = request.options['join'] || ', '
 
     response.template = 'preformatted'
-    response['body'] = list.join(', ')
+    response['body'] = list.join(delim)
   end
 end

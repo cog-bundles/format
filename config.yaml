@@ -1,26 +1,40 @@
 ---
 cog_bundle_version: 3
 name: format
-version: 0.2.1
+version: 0.2.15
 docker:
   image: cogcmd/format
-  tag: 0.2.1
+  tag: 0.2.15
 commands:
-  table:
+  head:
     executable: /home/bundle/cog-command
-    documentation: "format:table field1 field2 ... fieldN"
-    executable: cog-command
+    documentation: "format:head [count] - pass through the first [count] results"
+    rules: [ 'allow' ]
+  fields:
+    executable: /home/bundle/cog-command
+    documentation: "format:fields - list the fields in an input object"
     rules: [ 'allow' ]
   list:
-    documentation: "format:list field [[--order|-o] <asc|desc>]"
+    documentation: "format:list field [[--order|-o] [[--join|-j] delim] <asc|desc>] - build a list of the values for a given field from the results of the previous pipeline stage"
     executable: /home/bundle/cog-command
     options:
       order:
         type: string
         required: false
         short_flag: o
+      join:
+        type: string
+        required: false
+        short_flag: j
+    rules: [ 'allow' ]
+  table:
+    executable: /home/bundle/cog-command
+    documentation: "format:table field1 field2 ... fieldN - format the output of the previous pipeline stage as a table"
     rules: [ 'allow' ]
 templates:
   preformatted:
     slack: '```{{ body }}```'
     hipchat: '<pre>{{ body }}</pre>'
+  fields:
+    slack: '```{{#fields}}{{.}} {{/fields}}```'
+    hipchat: '<pre>{{#fields}}{{.}} {{/fields}}</pre>'
