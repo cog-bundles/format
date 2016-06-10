@@ -1,10 +1,10 @@
 ---
 cog_bundle_version: 3
 name: format
-version: 0.3
+version: "0.3"
 docker:
   image: cogcmd/format
-  tag: 0.3
+  tag: "0.3"
 commands:
   head:
     executable: /home/bundle/cog-command
