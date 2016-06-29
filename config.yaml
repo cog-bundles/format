@@ -2,10 +2,10 @@
 cog_bundle_version: 3
 name: format
 description: "Pipeline output formatting utilities"
-version: "0.3"
+version: "0.4.0"
 docker:
   image: cogcmd/format
-  tag: "0.3"
+  tag: "0.4.0"
 commands:
   head:
     executable: /home/bundle/cog-command
@@ -34,7 +34,89 @@ commands:
   table:
     description: "Generate a table from pipeline output"
     executable: /home/bundle/cog-command
-    documentation: "format:table field1 field2 ... fieldN - format the output of the previous pipeline stage as a table"
+    documentation: |
+      format:table field1 field2 ... fieldN - format the output of the previous pipeline stage as a table
+
+      Each field is taken to be a key that should be extracted from an
+      input map.
+
+      When the field is a string like "foo", this means "select the
+      value of the 'foo' key".
+
+      Alternatively, a path can be provided, as in "foo.bar.baz". This
+      will produce a column named "baz", with values found at that key
+      path. For instance, when run on the object
+
+        {"foo": {"bar": {"baz": "hello world"}}}
+
+      the string "foo.bar.baz" will extract the value
+      "hello world".
+
+      Fields may be renamed, as well. Passing a quoted string like
+      "foo=bar" will produce a column labeled "foo", with the value of
+      the "bar" key. Paths can be renamed in the same way, if desired
+      (e.g. "foo=foo.bar.baz"). Note that these pairs *must* be quoted
+      to parse correctly.
+
+      If such a column name transformation will result in a duplicate
+      name, the full keypath will be used instead.
+
+      However, these conventions mean that this command may not
+      operate well on fields that contain "=" or "." characters.
+
+      These behaviors are demonstrated in the following examples,
+      formatted for readability:
+
+      seed '[{"foo": "hello", "bar": "world"},
+             {"foo": "hola", "bar": "mundo"}]'
+        | format:table foo bar
+      +-------+-------+
+      |  foo  |  bar  |
+      +-------+-------+
+      | hello | world |
+      | hola  | mundo |
+      +-------+-------+
+
+      seed '[{"foo": "hello", "bar": "world"},
+             {"foo": "hola", "bar": "mundo"}]'
+        | format:table "key=foo" "value=bar"
+      +-------+-------+
+      |  key  | value |
+      +-------+-------+
+      | hello | world |
+      | hola  | mundo |
+      +-------+-------+
+
+      seed '[{"foo": {"greeting": "hello", "valediction": "good-bye"}, "bar": "world"},
+             {"foo": {"greeting": "hola", "valediction": "adios"}, "bar": "mundo"}]'
+        | format:table foo.greeting bar
+
+      +----------+-------+
+      | greeting |  bar  |
+      +----------+-------+
+      | hello    | world |
+      | hola     | mundo |
+      +----------+-------+
+
+      seed '[{"foo": {"greeting": "hello", "valediction": "good-bye"}, "bar": "world"},
+             {"foo": {"greeting": "hola", "valediction": "adios"}, "bar": "mundo"}]'
+        | format:table "farwell=foo.valediction" bar
+      +----------+-------+
+      | farwell  |  bar  |
+      +----------+-------+
+      | good-bye | world |
+      | adios    | mundo |
+      +----------+-------+
+
+      seed '[{"foo": {"bar": "inside"}, "bar": "outside"},
+             {"foo": {"bar": "also inside"}, "bar": "also outside"}]'
+        | format:table bar foo.bar
+      +--------------+-------------+
+      |     bar      |   foo.bar   |
+      +--------------+-------------+
+      | outside      | inside      |
+      | also outside | also inside |
+      +--------------+-------------+
     rules: [ 'allow' ]
 templates:
   preformatted:

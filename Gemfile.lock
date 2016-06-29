@@ -1,15 +1,19 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    cog-rb (0.1.5)
+    cog-rb (0.1.6)
+    jsonpath (0.5.8)
+      multi_json
+    multi_json (1.12.1)
     text-table (1.2.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cog-rb (~> 0.1.5)
+  cog-rb (~> 0.1.6)
+  jsonpath (~> 0.5.8)
   text-table
 
 BUNDLED WITH
-   1.12.4
+   1.12.5

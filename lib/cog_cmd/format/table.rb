@@ -2,6 +2,7 @@
 
 require 'cog/command'
 require 'text-table'
+require 'jsonpath'
 
 class CogCmd::Format::Table < Cog::Command
   # Since cog commands that are run in a pipeline are run once for each JSON object
@@ -24,10 +25,11 @@ class CogCmd::Format::Table < Cog::Command
     return unless step == :last
 
     table = Text::Table.new
-    table.head = request.args
+    mappings   = mappings(request.args)
+    table.head = mappings.map{|m| m[:name]}
 
-    fetch_input.each do |row|
-      table.rows << request.args.map { |field| row[field] }
+    fetch_input.each do |input|
+      table.rows << mappings.map{|m| m[:path].on(input).first || ""}
     end
 
     # Set the template that we'd like to use for the output and assign the
@@ -36,4 +38,26 @@ class CogCmd::Format::Table < Cog::Command
     response.template = 'preformatted'
     response['body'] = table.to_s
   end
+
+  def mappings(args)
+    args_with_aliases = args.map{|a| with_alias(a)}
+    aliases = args_with_aliases.map(&:first)
+    conflicting_aliases = aliases.select{|a| aliases.count(a) > 1}.uniq
+    args_with_aliases.map do |a, selector|
+      name = conflicting_aliases.include?(a) ? selector : a
+      {name: name, path: JsonPath.new("$.#{selector}")}
+    end
+  end
+
+  # Generate an alias/selector pair
+  def with_alias(arg)
+    if arg.include?("=")
+      arg.split("=", 2)
+    elsif arg.include?(".")
+      [arg.split(".").last, arg]
+    else
+      [arg, arg]
+    end
+  end
+
 end
