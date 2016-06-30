@@ -1,18 +1,33 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    cog-rb (0.1.6)
+    cog-rb (0.1.7)
+    diff-lcs (1.2.5)
     jsonpath (0.5.8)
       multi_json
     multi_json (1.12.1)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.0)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
     text-table (1.2.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cog-rb (~> 0.1.6)
+  cog-rb (~> 0.1.7)
   jsonpath (~> 0.5.8)
+  rspec
   text-table
 
 BUNDLED WITH
