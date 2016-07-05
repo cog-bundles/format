@@ -10,7 +10,12 @@ commands:
   head:
     executable: /home/bundle/cog-command
     description: "Pass through only the first N results"
-    documentation: "format:head [count] - pass through the first [count] results"
+    documentation: |
+      format:head [count] - pass through the first [count] results
+
+      `count` must be a non-zero positive integer. The default value
+      is `10` if none is provided.
+
     rules: [ 'allow' ]
   fields:
     executable: /home/bundle/cog-command
