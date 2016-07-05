@@ -32,7 +32,10 @@ commands:
     rules: [ 'allow' ]
   list:
     description: "Build a list of values"
-    documentation: "format:list field [[--order|-o] [[--join|-j] delim] <asc|desc>] - build a list of the values for a given field from the results of the previous pipeline stage"
+    documentation: |
+      format:list field [[--order|-o] <asc|desc>] [[--join|-j] delim]] - build a list of the values for a given field from the results of the previous pipeline stage
+
+      Returns nothing if no inputs contain a value for `field`.
     executable: /home/bundle/cog-command
     options:
       order:
