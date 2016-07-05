@@ -20,7 +20,15 @@ commands:
   fields:
     executable: /home/bundle/cog-command
     description: "List the fields in an input object"
-    documentation: "format:fields - list the fields in an input object"
+    documentation: |
+      format:fields - list the fields in an input object
+
+      Returns a sorted list of all the top-level keys in an input
+      object.
+
+      Returns nothing if run without input (e.g., at the beginning of
+      a pipeline).
+
     rules: [ 'allow' ]
   list:
     description: "Build a list of values"
