@@ -11,6 +11,8 @@ describe "the format:head command" do
   # in order to build up its internal counter
   def set_last_position(pos)
     ENV["COG_INVOCATION_STEP"] = (pos+1).to_s
+
+    allow(Cog::Services::Memory).to receive(:replace) # don't bother calling this; there's no server listening!
     expect(Cog::Services::Memory).to receive(:get).with(invocation_id).and_return(pos)
   end
 
