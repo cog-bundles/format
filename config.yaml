@@ -10,16 +10,32 @@ commands:
   head:
     executable: /home/bundle/cog-command
     description: "Pass through only the first N results"
-    documentation: "format:head [count] - pass through the first [count] results"
+    documentation: |
+      format:head [count] - pass through the first [count] results
+
+      `count` must be a non-zero positive integer. The default value
+      is `10` if none is provided.
+
     rules: [ 'allow' ]
   fields:
     executable: /home/bundle/cog-command
     description: "List the fields in an input object"
-    documentation: "format:fields - list the fields in an input object"
+    documentation: |
+      format:fields - list the fields in an input object
+
+      Returns a sorted list of all the top-level keys in an input
+      object.
+
+      Returns nothing if run without input (e.g., at the beginning of
+      a pipeline).
+
     rules: [ 'allow' ]
   list:
     description: "Build a list of values"
-    documentation: "format:list field [[--order|-o] [[--join|-j] delim] <asc|desc>] - build a list of the values for a given field from the results of the previous pipeline stage"
+    documentation: |
+      format:list field [[--order|-o] <asc|desc>] [[--join|-j] delim]] - build a list of the values for a given field from the results of the previous pipeline stage
+
+      Returns nothing if no inputs contain a value for `field`.
     executable: /home/bundle/cog-command
     options:
       order:
