@@ -10,6 +10,7 @@ Tools for working with the output of commands in Cog pipelines.
 * `format:fields` - show the keys included in a command response
 * `format:list` - build a list of the values for a given key from each response object
 * `format:table` - format command response as a table. see-also: `operable:table`
+* `format:tail` - filter the output to only include the last N responses
 
 ## Permissions
 
@@ -63,6 +64,18 @@ alex, geddy, neil
 | neil  | drummer/lyricist        |
 | alex  | lead guitar             |
 +-------+-------------------------+
+```
+-------------------------------------------------------------------------------
+### format:head
+
+```
+> seed ... | format:tail 1
+```
+```json
+{
+  "name": "alex",
+  "role": "lead guitar"
+}
 ```
 -------------------------------------------------------------------------------
 
