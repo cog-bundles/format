@@ -134,6 +134,16 @@ commands:
       | also outside | also inside |
       +--------------+-------------+
     rules: [ 'allow' ]
+  tail:
+    executable: /home/bundle/cog-command
+    description: "Pass through only the last N results"
+    documentation: |
+      format:tail [count] - pass through the last [count] results
+
+      `count` must be a non-zero positive integer. The default value
+      is `10` if none is provided.
+
+    rules: [ 'allow' ]
 templates:
   preformatted:
     slack: '```{{ body }}```'
