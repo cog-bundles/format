@@ -2,10 +2,10 @@
 cog_bundle_version: 3
 name: format
 description: "Pipeline output formatting utilities"
-version: "0.4.1"
+version: "0.4.2"
 docker:
   image: cogcmd/format
-  tag: "0.4.1"
+  tag: "0.4.2"
 commands:
   head:
     executable: /home/bundle/cog-command
