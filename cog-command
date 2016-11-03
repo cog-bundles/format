@@ -4,7 +4,8 @@
 # since so many paths are relative.
 Dir.chdir(File.dirname(__FILE__))
 
-require 'bundler/setup'
+# Set load path for gems installed with "bundle install --standalone"
+require_relative 'bundle/bundler/setup'
 require 'cog'
 
 Cog.bundle('format')
