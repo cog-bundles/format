@@ -1,58 +1,64 @@
 ---
-cog_bundle_version: 3
+cog_bundle_version: 4
 name: format
-description: "Pipeline output formatting utilities"
-version: "0.4.3"
+description: Pipeline output formatting utilities
+version: 0.5.0
 docker:
   image: cogcmd/format
-  tag: "0.4.3"
+  tag: 0.5.0
 commands:
   head:
-    executable: /home/bundle/cog-command
-    description: "Pass through only the first N results"
-    documentation: |
-      format:head [count] - pass through the first [count] results
-
-      `count` must be a non-zero positive integer. The default value
-      is `10` if none is provided.
-
-    rules: [ 'allow' ]
+    executable: "/home/bundle/cog-command"
+    description: Pass through only the first N results. Defaults to 10 results."
+    arguments: "[count]"
+    rules:
+    - allow
   fields:
-    executable: /home/bundle/cog-command
-    description: "List the fields in an input object"
-    documentation: |
-      format:fields - list the fields in an input object
-
+    executable: "/home/bundle/cog-command"
+    description: List the fields in an input object
+    long_description: |
       Returns a sorted list of all the top-level keys in an input
       object.
 
       Returns nothing if run without input (e.g., at the beginning of
       a pipeline).
-
-    rules: [ 'allow' ]
+    rules:
+    - allow
   list:
-    description: "Build a list of values"
-    documentation: |
-      format:list field [[--order|-o] <asc|desc>] [[--join|-j] delim]] - build a list of the values for a given field from the results of the previous pipeline stage
-
-      Returns nothing if no inputs contain a value for `field`.
-    executable: /home/bundle/cog-command
+    description: Build list of values from pipeline input
+    long_description: |
+      Builds a string representation of a list of values from pipeline input
+      with each item separated by a customizable delimiter.
+    executable: "/home/bundle/cog-command"
     options:
       order:
+        description: 'Sort order for list. Allowed values are: asc, desc'
         type: string
         required: false
         short_flag: o
       join:
+        description: Delimiter to use between list items. Default is ", "
         type: string
         required: false
         short_flag: j
-    rules: [ 'allow' ]
+    rules:
+    - allow
+  pluck:
+    executable: "/home/bundle/cog-command"
+    description: Return a nested object from the input
+    arguments: "<path>"
+    options:
+      as:
+        description: Return results in a field named with the value of this option
+        type: string
+        required: false
+    rules:
+    - allow
   table:
-    description: "Generate a table from pipeline output"
-    executable: /home/bundle/cog-command
+    description: Generate a table from pipeline output
+    executable: "/home/bundle/cog-command"
+    arguments: field1 field2 ... fieldN
     documentation: |
-      format:table field1 field2 ... fieldN - format the output of the previous pipeline stage as a table
-
       Each field is taken to be a key that should be extracted from an
       input map.
 
@@ -79,10 +85,7 @@ commands:
 
       However, these conventions mean that this command may not
       operate well on fields that contain "=" or "." characters.
-
-      These behaviors are demonstrated in the following examples,
-      formatted for readability:
-
+    examples: |
       seed '[{"foo": "hello", "bar": "world"},
              {"foo": "hola", "bar": "mundo"}]'
         | format:table foo bar
@@ -133,21 +136,19 @@ commands:
       | outside      | inside      |
       | also outside | also inside |
       +--------------+-------------+
-    rules: [ 'allow' ]
+    rules:
+    - allow
   tail:
-    executable: /home/bundle/cog-command
-    description: "Pass through only the last N results"
-    documentation: |
-      format:tail [count] - pass through the last [count] results
-
-      `count` must be a non-zero positive integer. The default value
-      is `10` if none is provided.
-
-    rules: [ 'allow' ]
+    executable: "/home/bundle/cog-command"
+    description: Pass through only the last N results. Defaults to 10 results.
+    arguments: "[count]"
+    rules:
+    - allow
 templates:
   preformatted:
-    slack: '```{{ body }}```'
-    hipchat: '<pre>{{ body }}</pre>'
+    body: |
+      ```
+      ~$results[0].body~
+      ```
   fields:
-    slack: '```{{#fields}}{{.}} {{/fields}}```'
-    hipchat: '<pre>{{#fields}}{{.}} {{/fields}}</pre>'
+    body: "**Fields:** ~join var=$results[0].fields~~$item~~end~\n"
