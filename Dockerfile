@@ -1,7 +1,7 @@
 FROM alpine:3.4
 
 # Install basic dependencies
-RUN apk -U add ca-certificates ruby ruby-json \
+RUN apk -U add ca-certificates ruby ruby-json && \
     rm -f /var/cache/apk/*
 
 # Setup bundle user and directory
@@ -13,9 +13,10 @@ RUN adduser -h /home/bundle -D bundle && \
 WORKDIR /home/bundle
 COPY Gemfile Gemfile.lock /home/bundle/
 
-RUN gem install bundler --no-rdoc --no-ri && \
+RUN apk add -U ruby-bundler && \
     su bundle -c 'bundle install --standalone --without="development test"' && \
-    gem uninstall -a bundler --force
+    apk del ruby-bundler && \
+    rm -f /var/cache/apk/*
 
 # Copy rest of code
 COPY . /home/bundle
