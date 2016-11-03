@@ -1,0 +1,1 @@
+**Fields:** ~join var=$results[0].fields~~$item~~end~
