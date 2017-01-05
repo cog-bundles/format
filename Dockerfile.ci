@@ -1,0 +1,6 @@
+FROM operable/ruby:2.3.1-r0
+
+WORKDIR /testing
+COPY . /testing
+
+RUN bundle install --path .bundle
