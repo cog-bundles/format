@@ -5,3 +5,19 @@ steps:
       docker-compose:
         run: test
         config: docker-compose.ci.yml
+
+  - wait
+
+  - label: ":cogops: :docker: Build and Push Image"
+    plugins:
+      "operable/cog-bundle":
+        build: config.yaml
+        tag: "cogcmd/format-testing:0.5.0-${BUILDKITE_BUILD_NUMBER}-${BUILDKITE_COMMIT}"
+
+  - wait
+
+  - label: ":cogops: Test it in a Cog server!"
+    plugins:
+      "operable/cog-bundle":
+        test: integration.yaml
+        cog-version: cm/docker-compose-v2

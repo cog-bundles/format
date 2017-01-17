@@ -1,0 +1,48 @@
+---
+"format:head":
+  - desc: returns a subset of the input data
+    pipeline: format:head 2
+    input:
+      - x: 1
+      - y: 2
+      - z: 3
+    output:
+      - x: 1
+      - y: 2
+
+"format:fields":
+  - desc: returns the fields of an object
+    pipeline: format:fields
+    input:
+      x: 1
+      y: 2
+      z: 3
+    output:
+      - fields: [ x, y, z ]
+
+"format:list":
+  - desc: can extract fields
+    pipeline: format:list name
+    input:
+      - name: geddy
+      - name: neil
+      - name: alex
+    output:
+      - body: alex, geddy, neil
+
+"format:table":
+  - desc: generates a table string
+    pipeline: format:table x y
+    input:
+      - x: one
+        y: two
+      - x: uno
+        y: dos
+    output:
+      - body: |
+          +-----+-----+
+          |  x  |  y  |
+          +-----+-----+
+          | one | two |
+          | uno | dos |
+          +-----+-----+
