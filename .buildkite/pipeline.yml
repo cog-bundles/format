@@ -20,4 +20,3 @@ steps:
     plugins:
       "operable/cog-bundle":
         test: integration.yaml
-        cog-version: cm/docker-compose-v2
