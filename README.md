@@ -2,8 +2,6 @@
 
 Tools for working with the output of commands in Cog pipelines.
 
-[![Build status](https://badge.buildkite.com/6a3131ba17c39e21e8bfcf3340056c6ccb33d9358826ff7f6b.svg)](https://buildkite.com/operable/format)
-
 ## Commands
 
 * `format:head` - filter the output to only include the first N responses
